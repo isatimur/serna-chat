@@ -18,10 +18,11 @@
 <div class="container" id="app" v-cloak>
     <div class="row">
         <div class="col-md-6">
-            <h3>{{roomName}}</h3>
+                <h4>{{roomName}} <span class="badge badge-info badge-pill">{{userCount}}</span></h4>
         </div>
         <div class="col-md-6 text-right">
             <a class="btn btn-primary btn-sm" href="/logout">Exit</a>
+            <a class="btn btn-info btn-sm" href="/chat/room">Обратно в Холл</a>
         </div>
     </div>
     <div class="input-group">
@@ -58,7 +59,8 @@
             roomName: '',
             message: '',
             messages: [],
-            token: ''
+                token: '',
+                userCount: 0
         },
         created() {
             this.roomId = localStorage.getItem('wschat.roomId');
@@ -71,7 +73,7 @@
                         var recv = JSON.parse(message.body);
                         _this.recvMessage(recv);
                     });
-                    _this.sendMessage('ENTER');
+                    // _this.sendMessage('ENTER');
                 }, function (error) {
                     alert("Не удалось подключиться к серверу. Повторите попытку");
                     location.href = "/chat/room";
@@ -88,6 +90,7 @@
                 this.message = '';
             },
             recvMessage: function (recv) {
+                this.userCount = recv.userCount;
                 this.messages.unshift({"type": recv.type, "from": recv.from, "message": recv.message})
             }
         }

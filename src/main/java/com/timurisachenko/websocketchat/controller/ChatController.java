@@ -1,6 +1,8 @@
 package com.timurisachenko.websocketchat.controller;
 
 import com.timurisachenko.websocketchat.model.ChatMessage;
+import com.timurisachenko.websocketchat.repository.ChatRoomRepository;
+import com.timurisachenko.websocketchat.service.ChatService;
 import com.timurisachenko.websocketchat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +20,17 @@ public class ChatController {
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
     private final ChannelTopic channelTopic;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatService chatService;
 
+    /**
+     * websocket "/app/chat/message".
+     */
     @MessageMapping("/chat/message")
     public void message(ChatMessage message, @Header("token") String token) {
         String nickname = jwtTokenProvider.getUserFromToken(token);
         message.setFrom(nickname);
-        if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
-            message.setFrom("[notification]");
-            message.setMessage(nickname + " Thx for joining");
-        }
-        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
+        message.setUserCount(chatRoomRepository.getUserCount(message.getRoomId()));
+        chatService.sendChatMessage(message);
     }
 }
