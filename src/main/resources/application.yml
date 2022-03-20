@@ -5,3 +5,5 @@ spring:
   freemarker:
     cache: false
     suffix: .ftl
+  jwt:
+    secret: govlepel@$&

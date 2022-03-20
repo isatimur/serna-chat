@@ -17,15 +17,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class RedisSubscriber implements MessageListener {
+public class RedisSubscriber {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final RedisTemplate redisTemplate;
     private final SimpMessageSendingOperations messagingTemplate;
 
-    @Override
-    public void onMessage(Message message, byte[] pattern) {
+    public void sendMessage(String publishMessage) {
         try {
-            String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
             ChatMessage chatMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
             messagingTemplate.convertAndSend("/topic/chat/room/" + chatMessage.getRoomId(), chatMessage);
         } catch (Exception e) {

@@ -16,16 +16,21 @@
 </head>
 <body>
 <div class="container" id="app" v-cloak>
-    <div>
-        <h2>{{room.name}}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>{{roomName}}</h3>
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary btn-sm" href="/logout">Exit</a>
+        </div>
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">Содержание:</label>
         </div>
-        <input type="text" class="form-control" v-model="message" @keyup.enter="sendMessage">
+        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage('TALK')">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="sendMessage">Sending</button>
+            <button class="btn btn-primary" type="button" @click="sendMessage('TALK')">Sending</button>
         </div>
     </div>
     <ul class="list-group">
@@ -33,7 +38,6 @@
             {{message.from}} - {{message.message}}</a>
         </li>
     </ul>
-    <div></div>
 </div>
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
@@ -45,61 +49,48 @@
     // websocket & stomp initialize
     var sock = new SockJS("/ws/chat");
     var ws = Stomp.over(sock);
+    var reconnect = 0;
     // vue.js
     var vm = new Vue({
         el: '#app',
         data: {
             roomId: '',
-            room: {},
-            from: '',
+            roomName: '',
             message: '',
-            messages: []
+            messages: [],
+            token: ''
         },
         created() {
-            alert('created')
-            this.roomId = localStorage.getItem("wschat.roomId");
-            this.from = localStorage.getItem("wschat.from");
-            alert('roomId: ' + this.roomId)
-            alert('from: ' + this.from)
-            this.findRoom();
+            this.roomId = localStorage.getItem('wschat.roomId');
+            this.roomName = localStorage.getItem('wschat.roomName');
+            var _this = this;
+            axios.get('/chat/user').then(response => {
+                _this.token = response.data.token;
+                ws.connect({"token": _this.token}, function (frame) {
+                    ws.subscribe("/topic/chat/room/" + _this.roomId, function (message) {
+                        var recv = JSON.parse(message.body);
+                        _this.recvMessage(recv);
+                    });
+                    _this.sendMessage('ENTER');
+                }, function (error) {
+                    alert("Не удалось подключиться к серверу. Повторите попытку");
+                    location.href = "/chat/room";
+                });
+            });
         },
         methods: {
-            findRoom: function () {
-                axios.get('/chat/room/' + this.roomId).then(response => {
-                    this.room = response.data;
-                });
-            },
-            sendMessage: function () {
-                ws.send("/app/chat/message", {}, JSON.stringify({
-                    type: 'TALK',
+            sendMessage: function (type) {
+                ws.send("/app/chat/message", {"token": this.token}, JSON.stringify({
+                    type: type,
                     roomId: this.roomId,
-                    from: this.from,
                     message: this.message
                 }));
                 this.message = '';
             },
             recvMessage: function (recv) {
-                this.messages.unshift({
-                    "type": recv.type,
-                    "from": recv.type == 'ENTER' ? '[notification]' : recv.from,
-                    "message": recv.message
-                })
+                this.messages.unshift({"type": recv.type, "from": recv.from, "message": recv.message})
             }
         }
-    });
-    // pub/topic event
-    ws.connect({}, function(frame) {
-        ws.subscribe("/topic/chat/room/"+vm.$data.roomId, function(message) {
-            var recv = JSON.parse(message.body);
-            vm.recvMessage(recv);
-        });
-
-        ws.send("/app/chat/message", {}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, from:vm.$data.from}));
-        alert(vm.$data.roomId)
-        alert(vm.$data.from)
-
-    }, function(error) {
-        alert("error "+error);
     });
 </script>
 </body>
