@@ -13,11 +13,10 @@ import javax.annotation.Resource;
 @RequiredArgsConstructor
 @Repository
 public class ChatRoomRepository {
-    // Redis CacheKeys
-    private static final String CHAT_ROOMS = "CHAT_ROOM";
     public static final String USER_COUNT = "USER_COUNT";
     public static final String ENTER_INFO = "ENTER_INFO";
-
+    // Redis CacheKeys
+    private static final String CHAT_ROOMS = "CHAT_ROOM";
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, ChatRoom> hashOpsChatRoom;
     @Resource(name = "redisTemplate")

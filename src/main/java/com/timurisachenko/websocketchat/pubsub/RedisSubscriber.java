@@ -2,16 +2,9 @@ package com.timurisachenko.websocketchat.pubsub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.timurisachenko.websocketchat.model.ChatMessage;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.connection.Message;
-import org.springframework.data.redis.connection.MessageListener;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j

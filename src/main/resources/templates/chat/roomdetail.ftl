@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/dist/css/bootstrap.min.css">
     <style>
         [v-cloak] {
             display: none;
@@ -18,7 +18,7 @@
 <div class="container" id="app" v-cloak>
     <div class="row">
         <div class="col-md-6">
-                <h4>{{roomName}} <span class="badge badge-info badge-pill">{{userCount}}</span></h4>
+            <h4>{{roomName}} <span class="badge badge-info badge-pill">{{userCount}}</span></h4>
         </div>
         <div class="col-md-6 text-right">
             <a class="btn btn-primary btn-sm" href="/logout">Exit</a>
@@ -41,11 +41,11 @@
     </ul>
 </div>
 <!-- JavaScript -->
-<script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
-<script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
-<script src="/webjars/bootstrap/4.3.1/dist/js/bootstrap.min.js"></script>
-<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
-<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+<script src="/webjars/vue/2.6.14/dist/vue.min.js"></script>
+<script src="/webjars/axios/0.21.1/dist/axios.min.js"></script>
+<script src="/webjars/bootstrap/5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.4/stomp.min.js"></script>
 <script>
     // websocket & stomp initialize
     var sock = new SockJS("/ws/chat");
@@ -59,8 +59,8 @@
             roomName: '',
             message: '',
             messages: [],
-                token: '',
-                userCount: 0
+            token: '',
+            userCount: 0
         },
         created() {
             this.roomId = localStorage.getItem('wschat.roomId');

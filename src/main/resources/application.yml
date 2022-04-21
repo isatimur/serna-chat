@@ -6,4 +6,4 @@ spring:
     cache: false
     suffix: .ftl
   jwt:
-    secret: govlepel@$&
+    secret: VkYp3s5v8y/B?E(H+MbQeThWmZq4t7w9
