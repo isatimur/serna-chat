@@ -1,5 +1,6 @@
-# spring-websocket-chat
+# SERNA CHAT
 ***The Serna Chat*** starting here
+
 Websocket, Spring Data, Spring Web, Spring Security, Spring WebFlux, Redis, MongoDB, Reactive Streams, Gateway, JWT authentification and authorization
 Java 17+, Swagger-OPENAPI, RSocket(considering migration on it to add backpressure) Spring Cloud ecosystem, 
 
