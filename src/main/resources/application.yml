@@ -1,0 +1,9 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  freemarker:
+    cache: false
+    suffix: .ftl
+  jwt:
+    secret: VkYp3s5v8y/B?E(H+MbQeThWmZq4t7w9
