@@ -1,4 +1,6 @@
 # SERNA CHAT
+![serna](9088428c9f40f5a28b8c9d9d0d89ada5.png)
+
 ***The Serna Chat*** starting here
 
 Websocket, Spring Data, Spring Web, Spring Security, Spring WebFlux, Redis, MongoDB, Reactive Streams, Gateway, JWT authentification and authorization
