@@ -10,6 +10,7 @@ and smoothly split it into Microservices, that application will be highly availa
 Currently in a team are two members working on this project:
 
 Artem Yakimenko - based in Russia - github: [@vepr85](https://github.com/vepr85) 
+
 Timur Isachenko - based in Russia - github: [@isatimur](https://github.com/isatimur)
 
 We are looking for any support and help to improve the project and make as a cool product, available as an Open Source and 
