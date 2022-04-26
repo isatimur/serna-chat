@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.timurisachenko</groupId>
-    <artifactId>websocket-chat</artifactId>
+    <artifactId>serna-chat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-websocket-chat</name>
-    <description>spring-websocket-chat</description>
+    <name>serna-chat</name>
+    <description>serna-chat proj</description>
     <properties>
         <java.version>11</java.version>
     </properties>
