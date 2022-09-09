@@ -18,7 +18,7 @@
 <div class="container" id="app" v-cloak>
     <div class="row">
         <div class="col-md-6">
-            <h4>{{roomName}} <span class="badge badge-info badge-pill">{{userCount}}</span></h4>
+            <h4>{{roomName}} <span class="badge badge-info badge-pill shadow-lg">{{userCount}}</span></h4>
         </div>
         <div class="col-md-6 text-right">
             <a class="btn btn-primary btn-sm" href="/logout">Exit</a>
@@ -84,6 +84,7 @@
             sendMessage: function (type) {
                 ws.send("/app/chat/message", {"token": this.token}, JSON.stringify({
                     type: type,
+                    from: this.from,
                     roomId: this.roomId,
                     message: this.message
                 }));
