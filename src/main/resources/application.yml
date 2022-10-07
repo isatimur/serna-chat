@@ -8,3 +8,4 @@ spring:
     suffix: .ftl
   jwt:
     secret: VkYp3s5v8y/B?E(H+MbQeThWmZq4t7w9
+x-private-key: ea4bf8a1-d400-4447-8d1f-803d366da71c

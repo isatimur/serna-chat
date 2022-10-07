@@ -1,31 +1,68 @@
 package com.itime.sernachat.service
 
-import com.itime.sernachat.domain.ChatMessage
-import com.itime.sernachat.repository.ChatRoomRepository
+//import com.itime.sernachat.repository.ChatRoomRepository
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.itime.sernachat.domain.Chat
+import com.itime.sernachat.domain.CommonMessage
+import com.itime.sernachat.repository.DirectChatRepository
+import com.itime.sernachat.repository.GroupChatRepository
+import org.slf4j.Logger
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.listener.ChannelTopic
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class DefaultChatService(
+    val logger: Logger,
+    val objectMapper: ObjectMapper,
     val channelTopic: ChannelTopic,
     val redisTemplate: RedisTemplate<*, *>,
-    val chatRoomRepository: ChatRoomRepository
+    val directChatRepository: DirectChatRepository,
+    val groupChatRepository: GroupChatRepository
 ) : ChatService {
-    override fun getRoomId(destination: String): String {
-        val lastIndex = destination.lastIndexOf('/')
-        return if (lastIndex != -1) destination.substring(lastIndex + 1) else ""
+    override fun sendChatMessage(chatMessage: CommonMessage) {
+        TODO("Not yet implemented")
     }
 
-    override fun sendChatMessage(chatMessage: ChatMessage) {
-        chatMessage.userCount = chatRoomRepository.getUserCount(chatMessage.roomId!!)
-        if (ChatMessage.MessageType.ENTER == chatMessage.type) {
-            chatMessage.message = chatMessage.from + "— Вы вошли в комнату"
-            chatMessage.from = "[уведомление]"
-        } else if (ChatMessage.MessageType.QUIT == chatMessage.type) {
-            chatMessage.message = chatMessage.from + "— Вы вошли в комнату"
-            chatMessage.from = "[уведомление]"
-        }
-        redisTemplate.convertAndSend(channelTopic.topic, chatMessage)
+    override fun getOrCreateChat(chat: Chat): Optional<Chat>? {
+        TODO("Not yet implemented")
     }
+
+    override fun getChatById(id: String): Optional<Chat> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getChatById(senderId: String, receipterId: String, boolean: Boolean): Optional<Chat> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllChats(): List<Chat> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllMessages(): List<CommonMessage> {
+        TODO("Not yet implemented")
+    }
+
+    override fun findChatMessages(senderId: String, recepientId: String): List<CommonMessage> {
+        TODO("Not yet implemented")
+    }
+
+    override fun save(chats: MutableList<Chat>): MutableList<Chat> {
+        TODO("Not yet implemented")
+    }
+
+    override fun save(commonMessage: CommonMessage): CommonMessage {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveMessages(messages: MutableList<CommonMessage>): MutableList<CommonMessage> {
+        TODO("Not yet implemented")
+    }
+
+    override fun countNewMessages(senderId: String?, recipientId: String?): Long? {
+        TODO("Not yet implemented")
+    }
+
 }

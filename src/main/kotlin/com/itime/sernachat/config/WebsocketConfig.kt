@@ -22,7 +22,8 @@ class WebsocketConfig(val stompHandler: StompHandler) : WebSocketMessageBrokerCo
     }
 
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
-        registry.enableSimpleBroker("/topic")
+        registry.enableSimpleBroker("/chatroom", "/user")
         registry.setApplicationDestinationPrefixes("/app")
+        registry.setUserDestinationPrefix("/user")
     }
 }

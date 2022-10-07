@@ -1,7 +1,7 @@
 package com.itime.sernachat.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.itime.sernachat.domain.ChatMessage
+import com.itime.sernachat.domain.CommonMessage
 import org.slf4j.Logger
 import org.springframework.messaging.simp.SimpMessageSendingOperations
 import org.springframework.stereotype.Service
@@ -15,8 +15,8 @@ class RedisSubscriber(
 ) {
     fun sendMessage(publishMessage: String?) {
         try {
-            val chatMessage: ChatMessage = objectMapper.readValue(publishMessage, ChatMessage::class.java)
-            messagingTemplate.convertAndSend("/topic/chat/room/" + chatMessage.roomId, chatMessage)
+            val message: CommonMessage = objectMapper.readValue(publishMessage, CommonMessage::class.java)
+            messagingTemplate.convertAndSend("/topic/chat/room/" + message.chatId, message)
         } catch (e: Exception) {
             logger.error(e.message)
         }
